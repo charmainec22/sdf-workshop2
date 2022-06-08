@@ -1,4 +1,4 @@
-package vtp2022.day2.workshop;
+package vtp2022.day2.workshop.account;
 import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
@@ -37,17 +37,10 @@ public class BankAccount {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getAcctId() {
         return acctId;
     }
 
-    public void setAcctId(String acctId) {
-        this.acctId = acctId;
-    }
 
     public float getBalance() {
         return balance;
@@ -129,8 +122,8 @@ public class BankAccount {
             System.err.print(e);
             throw new IllegalArgumentException("Invalid withdrawal amount");
         }
-
-        return withdrawAmtF.floatValue();
+        //return balance after withdrawal
+        return this.balance;
     }
 
 
