@@ -1,7 +1,4 @@
 package vtp2022.day2.workshop;
-
-import java.sql.Date;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
@@ -26,6 +23,7 @@ public class BankAccount {
     //constructor with bank acc name
     public BankAccount(String name){
         this.name = name;
+        this.balance = 0;
     }
 
     //2nd constructor with bank acc name & initial bal
@@ -93,7 +91,7 @@ public class BankAccount {
 
     
 
-    protected float withdraw(String withdrawAmt){
+    public float withdraw(String withdrawAmt){
         Float withdrawAmtF = null;
 
         //if a non-number is passed in, hit exception
@@ -108,6 +106,10 @@ public class BankAccount {
             if(this.isClosed()){
                 throw new IllegalArgumentException("Account is closed");
             }
+
+            if(withdrawAmtF.floatValue() > this.balance){
+                throw new IllegalArgumentException("Withdrawal Amount cannot be greater than account balance");
+            }
             
             //update the class variable of the deposit amount
             this.balance = this.balance - withdrawAmtF.floatValue();
@@ -116,7 +118,7 @@ public class BankAccount {
             StringBuilder txnStrbld = new StringBuilder();
             txnStrbld.append("Withdraw $");
             txnStrbld.append(withdrawAmtF.floatValue());
-            txnStrbld.append("at");
+            txnStrbld.append(" at ");
             txnStrbld.append(LocalDateTime.now());
             System.out.println(txnStrbld.toString());
             //save the event log into the txn linkedlist
@@ -130,9 +132,9 @@ public class BankAccount {
 
         return withdrawAmtF.floatValue();
     }
-    
 
-    protected void deposit(String depositAmt){
+
+    public void deposit(String depositAmt){
         //if a non-number is passed in, hit exception
         try{
             Float depositAmtF = Float.parseFloat(depositAmt);
@@ -154,7 +156,7 @@ public class BankAccount {
             StringBuilder txnStrbld = new StringBuilder();
             txnStrbld.append("Deposit $");
             txnStrbld.append(depositAmtF.floatValue());
-            txnStrbld.append("at");
+            txnStrbld.append(" at ");
             txnStrbld.append(LocalDateTime.now());
             System.out.println(txnStrbld.toString());
             //save the event log into the txn linkedlist
